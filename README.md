@@ -77,7 +77,7 @@ FingerFilePath: 'F:\\Code\\Golang\\Hacking\\PrintRaptor\\source\\special.yaml'
 FastMode: false
 ```
 
-![image-20250714152113863](https://gitee.com/eviden/img/raw/master/202507141521216.png)
+![image-20250714152113863](show.png)
 
 ## TODO
 
