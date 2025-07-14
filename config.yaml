@@ -1,0 +1,17 @@
+# 添加可自定义的http header
+ReqHeader:
+  - Content-Type: application/xml
+  - Cookie:
+      'phpsessionid: "123"'
+# 添加代理
+Proxy:
+  http://localhost:8000
+# 添加超时时间
+TimeOut: 1
+# post请求的body,默认base64解码再使用,可以直接打反序列化链哦~
+POST: 'dXNlcm5hbWU9YWRtaW4mcGFzc3dvcmQ9MTIzNDU2'
+# 探测目标文件位置
+TargetFilePath: 'F:\\Code\\Golang\\Hacking\\PrintRaptor\\source\\IP.txt'
+# 指纹文件路径
+FingerFilePath: 'F:\\Code\\Golang\\Hacking\\PrintRaptor\\source\\special.yaml'
+FastMode: false
