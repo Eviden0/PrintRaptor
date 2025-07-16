@@ -39,6 +39,9 @@ func main() {
 			log.Fatalf("Failed to load targets from file: %v", err)
 		}
 		//过一遍responseData即可,若第一次就为空那么直接退出
+		defer models.EndLogger()
+		models.Init() //初始化日志
+
 		for _, targetUrl := range targetsU {
 			// 对于每个targetUrl只需要Request一次,然后更换banner.CompiledRule 就去匹配即可
 			target, err := http.NewTarget(targetUrl, &rules[0])
@@ -57,6 +60,7 @@ func main() {
 				banner.Print()
 			}
 		}
+
 	} else {
 		fingerFilePath, err := config.GetFingerFilePath()
 		if err != nil {
@@ -75,6 +79,8 @@ func main() {
 		if err != nil {
 			log.Fatalf("Failed to load targets from file: %v", err)
 		}
+		defer models.EndLogger()
+		models.Init()
 		for _, targetUrl := range targetsU {
 			for _, rule := range rules {
 				target, err := http.NewTarget(targetUrl, &rule)
