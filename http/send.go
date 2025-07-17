@@ -9,7 +9,6 @@ import (
 	"fmt"
 	"github.com/twmb/murmur3"
 	"io"
-	"log"
 	"math/rand"
 	"net/http"
 	"net/url"
@@ -482,7 +481,7 @@ func Encode(buf []byte) string {
 func post(url string) (*http.Request, error) {
 	data, err := config.GetPostData()
 	if err != nil {
-		log.Println(err)
+		models.LogLoad.Warn(err)
 		data = []byte{} //置空
 	}
 	req, err := http.NewRequest(http.MethodPost, url, bytes.NewReader(data))
@@ -491,7 +490,7 @@ func post(url string) (*http.Request, error) {
 	}
 	headers, err := config.GetHeaders()
 	if err != nil {
-		log.Printf("config 请求头解析错误 %v", err)
+		models.LogLoad.Warn("config 请求头解析错误 %v", err)
 		// 自清理
 		for k := range headers {
 			headers.Del(k)
@@ -507,7 +506,7 @@ func get(url string) (*http.Request, error) {
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	headers, err := config.GetHeaders()
 	if err != nil {
-		log.Printf("config 请求头解析错误 %v", err)
+		models.LogLoad.Warn("config 请求头解析错误 %v", err)
 		// 自清理
 		for k := range headers {
 			headers.Del(k)
@@ -617,7 +616,7 @@ func (target *Target) Request() (*models.Banner, error) {
 		resp, err := client.Do(req)
 		//处理返回body为空的时候
 		if err != nil {
-			log.Printf("请求错误 %v\n", err)
+			models.LogLoad.Warn("请求错误 %v\n", err)
 			if banner.ResponseData == nil {
 				banner.ResponseData = &fingerprints.ResponseData{}
 			}
@@ -645,7 +644,7 @@ func (target *Target) Request() (*models.Banner, error) {
 		resp, err := client.Do(req)
 		//处理返回body为空的时候
 		if err != nil {
-			log.Printf("请求错误 %v\n", err)
+			models.LogLoad.Warn("请求错误 %v\n", err)
 			if banner.ResponseData == nil {
 				banner.ResponseData = &fingerprints.ResponseData{}
 			}
@@ -661,3 +660,4 @@ func (target *Target) Request() (*models.Banner, error) {
 		return banner, nil
 	}
 }
+
