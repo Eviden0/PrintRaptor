@@ -3,35 +3,7 @@ package models
 import (
 	"PrintRaptor/fingerprints"
 	"github.com/sirupsen/logrus"
-	"gopkg.in/natefinch/lumberjack.v2"
-	"io"
-	"os"
-	"sync"
 )
-
-var logger *logrus.Logger
-var once sync.Once
-
-func Init() {
-	once.Do(func() {
-		logResult := &lumberjack.Logger{
-			Filename: "logrus.log",
-			MaxSize:  1,
-		}
-		logger = logrus.New()
-		logger.SetFormatter(&logrus.JSONFormatter{})
-		logger.SetLevel(logrus.InfoLevel)
-		logger.SetOutput(io.MultiWriter(os.Stdout, logResult))
-	})
-} //初始化logrus
-
-func EndLogger() {
-	if logger != nil {
-		if lo, ok := logger.Out.(io.Closer); ok {
-			lo.Close()
-		}
-	}
-}
 
 type Banner struct {
 	ResponseData *fingerprints.ResponseData //包含header,body,hash,用于指纹匹配
@@ -48,7 +20,7 @@ func (banner *Banner) Print() {
 			fmt.Println("数据包长度:", banner.ResponseData.BodyLength)
 			fmt.Println("Icon Hash: " + banner.ResponseData.Hash)
 		*/
-		logger.WithFields(logrus.Fields{
+		LogLoad.WithFields(logrus.Fields{
 			"主机信息":      banner.ResponseData.Host,
 			"命中":        banner.CompiledRule.Name,
 			"标签":        banner.CompiledRule.Tag,
@@ -65,3 +37,4 @@ func (banner *Banner) Print() {
 		//fmt.Println(banner.ResponseData.Host + "未匹配到指纹规则" + banner.CompiledRule.Name)
 	}
 }
+
