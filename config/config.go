@@ -1,6 +1,7 @@
 package config
 
 import (
+	"PrintRaptor/models"
 	"crypto/tls"
 	"encoding/base64"
 	"errors"
@@ -28,11 +29,11 @@ func Load() {
 	// 读取根目录下的config配置文件
 	data, err := os.ReadFile("config.yaml")
 	if err != nil {
-		log.Fatalf("读取配置文件发生错误,%v", err)
+		models.LogLoad.Fatalf("读取配置文件发生错误,%v", err)
 	}
 	err = yaml.Unmarshal(data, &rawYamlData)
 	if err != nil {
-		log.Fatalf("解析配置文件失败: %v", err)
+		models.LogLoad.Fatalf("解析配置文件失败: %v", err)
 	}
 	log.Println("配置文件加载成功,初始化完成...")
 }
@@ -174,12 +175,12 @@ func GetFingerFilePath() (string, error) {
 func IsFastMode() bool {
 	raw, err := getData("FastMode")
 	if err != nil {
-		log.Println("FastMode配置项不存在,请检查config.yaml文件的写法,默认开启快速模式")
+		models.LogLoad.Warn("FastMode配置项不存在,请检查config.yaml文件的写法,默认开启快速模式")
 		return true //默认是快速模式
 	}
 	fastMode, ok := raw.(bool)
 	if !ok {
-		log.Println("FastMode配置项不是布尔类型,请检查config.yaml文件的写法,默认开启快速模式")
+		models.LogLoad.Warn("FastMode配置项不是布尔类型,请检查config.yaml文件的写法,默认开启快速模式")
 		return true
 	}
 	log.Println("根据config配置文件加载,您已指定精准模式!")
