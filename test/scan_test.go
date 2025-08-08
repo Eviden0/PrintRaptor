@@ -3,8 +3,8 @@ package test
 import (
 	"PrintRaptor/config"
 	"PrintRaptor/fingerprints"
-	"PrintRaptor/http"
 	"PrintRaptor/models"
+	"PrintRaptor/scan"
 	"fmt"
 	"log"
 	"testing"
@@ -24,7 +24,7 @@ func TestScan(t *testing.T) {
 	}
 	for _, targetUrl := range targetsU {
 		for _, rule := range rules {
-			target, err := http.NewTarget(targetUrl, &rule)
+			target, err := scan.NewTarget(targetUrl, &rule)
 			if err != nil {
 				log.Printf("Error creating target for %s with rule %s: %v", targetUrl, rule.Name, err)
 				continue
@@ -49,7 +49,7 @@ func TestCommanScan(t *testing.T) {
 	//过一遍responseData即可,若第一次就为空那么直接退出
 	for _, targetUrl := range targetsU {
 		// 对于每个targetUrl只需要Request一次,然后更换banner.CompiledRule 就去匹配即可
-		target, err := http.NewTarget(targetUrl, &rules[0])
+		target, err := scan.NewTarget(targetUrl, &rules[0])
 		if err != nil {
 			log.Printf("Error creating target for %s: %v", targetUrl, err)
 			continue

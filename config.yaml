@@ -1,17 +1,20 @@
 # 添加可自定义的http header
 ReqHeader:
   - Content-Type: application/xml
-  - Cookie:
-      'phpsessionid: "123"'
+  - Cookie: 'phpsessionid: 123'
 # 添加代理
-Proxy:
-  http://localhost:8000
+Proxy: http://localhost:8000
 # 添加超时时间
 TimeOut: 1
-# post请求的body,默认base64解码再使用,可以直接打反序列化链哦~
-POST: 'dXNlcm5hbWU9YWRtaW4mcGFzc3dvcmQ9MTIzNDU2'
-# 探测目标文件位置
-TargetFilePath: 'F:\\Code\\Golang\\Hacking\\PrintRaptor\\source\\IP.txt'
+#  post请求的body,默认base64解码再使用,可以直接打反序列化链哦~
+# TODO 后续支持直接从文件加载!
+POST: "dXNlcm5hbWU9YWRtaW4mcGFzc3dvcmQ9MTIzNDU2"
+# ip文件位置
+TargetFilePath: 'F:\\Code\\Golang\\Hacking\\PrintRaptor\\source\\url.txt'
 # 指纹文件路径
 FingerFilePath: 'F:\\Code\\Golang\\Hacking\\PrintRaptor\\source\\special.yaml'
+# 指定模式,默认为快速模式,即不会发送很多包,直接取根路径的一个包就直接进行指纹匹配了
 FastMode: false
+MongoUri: mongodb://localhost:27017
+# 1.写入csv文件 2. 写入mongodb 3.webhook通知, 默认是 1
+SaveMode: 2

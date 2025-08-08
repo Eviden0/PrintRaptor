@@ -268,6 +268,7 @@ func (c *ConditionNode) Eval(data *ResponseData) bool {
 
 	// 根据操作符进行不同的判断
 	switch c.Operator {
+	// TODO: 单独采取的是字符串包含判断,有点过于理想化了,后面可以优化优化
 	case TokenEquals:
 		return strings.Contains(targetValue, c.Value)
 	case TokenNotEquals:

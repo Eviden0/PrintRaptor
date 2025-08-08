@@ -10,8 +10,18 @@ type Banner struct {
 	CompiledRule *fingerprints.CompiledRule //加载的指纹识别规则
 }
 
+func (b *Banner) Match(rank ...int) bool {
+	tarRank := 0
+	if len(rank) > 0 {
+		tarRank = rank[0]
+	}
+	return b != nil &&
+		b.CompiledRule != nil &&
+		b.CompiledRule.AST != nil &&
+		b.CompiledRule.AST.Eval(b.ResponseData) && b.CompiledRule.Rank >= tarRank
+}
 func (banner *Banner) Print() {
-	if banner != nil && banner.CompiledRule.AST.Eval(banner.ResponseData) {
+	if banner.Match() {
 		fmt.Println("命中: " + banner.CompiledRule.Name + "\n标签: " + banner.CompiledRule.Tag + "\n命中规则: " + banner.CompiledRule.Expression)
 		fmt.Println("详细信息: ")
 		fmt.Println("主机信息: " + banner.ResponseData.Host)

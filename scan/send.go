@@ -1,4 +1,4 @@
-package http
+package scan
 
 import (
 	"PrintRaptor/config"
@@ -482,7 +482,6 @@ func Encode(buf []byte) string {
 func post(url string) (*http.Request, error) {
 	data, err := config.GetPostData()
 	if err != nil {
-		log.Println(err)
 		data = []byte{} //置空
 	}
 	req, err := http.NewRequest(http.MethodPost, url, bytes.NewReader(data))
@@ -617,7 +616,7 @@ func (target *Target) Request() (*models.Banner, error) {
 		resp, err := client.Do(req)
 		//处理返回body为空的时候
 		if err != nil {
-			log.Printf("请求错误 %v\n", err)
+			//log.Printf("请求错误 %v\n", err)
 			if banner.ResponseData == nil {
 				banner.ResponseData = &fingerprints.ResponseData{}
 			}
@@ -645,7 +644,7 @@ func (target *Target) Request() (*models.Banner, error) {
 		resp, err := client.Do(req)
 		//处理返回body为空的时候
 		if err != nil {
-			log.Printf("请求错误 %v\n", err)
+			//log.Printf("请求错误 %v\n", err)
 			if banner.ResponseData == nil {
 				banner.ResponseData = &fingerprints.ResponseData{}
 			}

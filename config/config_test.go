@@ -7,8 +7,8 @@ import (
 )
 
 func TestConfig(t *testing.T) {
-	Load()
-	headers, err := GetHeaders()
+	Load("F:\\Code\\Golang\\Hacking\\PrintRaptor\\config.yaml")
+	headers, err := GetMongoUri()
 	if err != nil {
 		log.Fatal(err)
 	}
